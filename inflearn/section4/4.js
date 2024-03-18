@@ -1,13 +1,31 @@
-function solution(n, k, arr) {
-  let sum = new Set();
-  for (let i = 0; i < n - 2; i++) {
-    for (let j = i + 1; j < n - 1; j++) {
-      for (let z = j + 1; z < n; z++) {
-        sum.add(arr[i] + arr[j] + arr[z]);
-      }
+function solution(n, m, arr) {
+  let sum = 0;
+  let discount = true;
+  let i = 0;
+  let cnt = 0;
+  arr.sort((a, b) => a[0] + a[1] - (b[0] + b[1]));
+  while (sum < m && i < n) {
+    if (sum < m) {
+      sum += arr[i][0] + arr[i][1];
+      cnt++;
+    } else if (sum > m && discount) {
+      sum -= arr[i][0] + arr[i][0] * 0.5;
+      discount = false;
+      cnt++;
+    } else {
+      break;
     }
+    i++;
   }
-  return [...sum].sort((a, b) => b - a)[k - 1];
+  return cnt;
 }
 
-console.log(solution(10, 3, [13, 15, 34, 23, 45, 65, 33, 11, 26, 42]));
+console.log(
+  solution(5, 28, [
+    [6, 6],
+    [2, 2],
+    [4, 3],
+    [4, 5],
+    [10, 3],
+  ]),
+);
